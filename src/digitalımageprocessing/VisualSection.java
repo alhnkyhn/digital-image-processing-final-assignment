@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 
 public class VisualSection extends javax.swing.JFrame {
-
+ BufferedImage image2 = null;
     public VisualSection() {
         initComponents();
     }
@@ -27,6 +27,8 @@ public class VisualSection extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -38,14 +40,33 @@ public class VisualSection extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Gri renge döndür!");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Kırp");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jButton3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
@@ -55,7 +76,12 @@ public class VisualSection extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton3)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -71,13 +97,15 @@ public class VisualSection extends javax.swing.JFrame {
         JFrame fileChooserFrame = new JFrame();
         
         //---- Filechooser created
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser =
+                new JFileChooser("C:\\Users\\csstu\\Documents\\GitHub\\digital-image-processing-final-assignment");
         fileChooser.showOpenDialog(fileChooserFrame);
         File selFile = fileChooser.getSelectedFile();
         System.out.println(selFile.getAbsolutePath());
         File input = new File(selFile.getAbsolutePath().toString()); // Image uploaded
         try {
             image = ImageIO.read(input); // Assigned
+            image2=image;
         } catch (IOException ex) {
             Logger.getLogger(VisualSection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -98,6 +126,18 @@ public class VisualSection extends javax.swing.JFrame {
            
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+     try {
+         DoGreyscale dogrey = new DoGreyscale(image2);
+     } catch (IOException ex) {
+         Logger.getLogger(VisualSection.class.getName()).log(Level.SEVERE, null, ex);
+     }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        CropImage crop = new CropImage(image2);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     
     public static void main(String args[]) {
         
@@ -105,6 +145,8 @@ public class VisualSection extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
